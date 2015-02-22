@@ -4,6 +4,27 @@
 
 I am proud to present you <b>tradewind.js</b>, a JavaScript plugin that implements a user-friendly interface for powerful CSS3 animations.
 
+### Essential features of tradewind.js
+
+#### Easy and human-friendly interface
+At least as intuitive as jQueryUI
+
+#### All the advantages of CSS3
+Forget jQueryUI's heavy and buggy handling of jQuery objects! With jQueryUI your JavaScript does a lot of hidden work to show small animations, <b>tradewind.js</b> instead does the minimum and gets a result that users feel like magic.
+
+#### A clean, clear, cross-browser callback after animation's end
+Firefox and Chrome didn't even agree how many end events should be fired in the end of a CSS3 animation? Did you get stuck in questions like [this](http://stackoverflow.com/questions/9255279/callback-when-css3-transition-finishes)? Forget about it, <b>tradewind.js</b> simply calculates the transition times and provides you a callback using vanilla JavaScript!
+
+#### No dependencies at all
+<b>tradewind.js</b> is written in vanilla JavaScript!
+
+#### Compatibility with IE8 and IE9
+Animations won't work because they are not supported, but the overall effect is still perfectly acceptable, being analogous to a simple change of style. You don't have to give up on animations because some of your users still have old browsers!
+
+#### Compatibility with existing default transitions
+Default transitions are overwritten during the animation, and restored at its end.
+
+#### Why tradewind.js?
 CSS3 animations are smooth, light, and included in HTML5 specifications, but they are really uncomfortable to use, because:
 
 1. they must be attached on an element <b>previously</b>, and on a whitelist of selected properties: the actual animation will take place later, when you change style of one of the those properties;
@@ -11,15 +32,6 @@ CSS3 animations are smooth, light, and included in HTML5 specifications, but the
 3. they must be written inside the CSS, forcing the developer to write animation's logics in an obscure way, and outside of the JavaScript files.
 
 Now, <b>tradewind.js</b> lets you enjoy the power of CSS3 animations without noticing these problems!
-
-### Essential features of tradewind.js
-
-1. Easy and human-friendly interface, at least as intuitive as jQueryUI
-2. All the advantages of CSS3: forget jQueryUI's heavy and buggy handling of jQuery objects! With jQueryUI your JavaScript does a lot of hidden work to show small animations, <b>tradewind.js</b> instead does the minimum and gets a result that users feel like magic.
-3. A <b>clean, clear, cross-browser callback</b> after animation's end; Firefox and Chrome didn't even agree how many end events should be fired in the end of a CSS3 animation? Did you get stuck in questions like [this](http://stackoverflow.com/questions/9255279/callback-when-css3-transition-finishes)? Forget about it, <b>tradewind.js</b> simply calculates the transition times and provides you a callback using vanilla JavaScript!
-4. No dependencies at all, <b>tradewind.js</b> is written in vanilla JavaScript!
-5. Compatibility with IE8 and IE9: animations won't work because they are not supported, but the overall effect is still perfectly acceptable, being analogous to a simple change of style. You don't have to give up on animations because some of your users still have old browsers!
-6. Compatibility with existing default transitions, which are overwritten during the animation, and restored at its end.
 
 ### How to use it
 
