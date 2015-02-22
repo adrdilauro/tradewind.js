@@ -4,7 +4,7 @@
 
 I am proud to present you <b>tradewind.js</b>, a JavaScript plugin that implements a user-friendly interface for powerful CSS3 animations.
 
-## Essential features of tradewind.js
+## Essential features
 
 #### Easy and human-friendly interface
 At least as intuitive as jQueryUI
