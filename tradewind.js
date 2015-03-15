@@ -321,12 +321,14 @@
 
   // Public method, applies the CSS; used differently in case of pre-styling
   window.tradeWind.apply = function (instructions, callback) {
-    var new_vals = applyAnimationCss(instructions);
+    var final_padding, new_vals = applyAnimationCss(instructions);
     applyFinalCss(new_vals);
+    final_padding = window.tradeWind.timing * 1000 + window.tradeWind.padding;
+    if (window.Modernizr && !Modernizr.csstransitions) final_padding = window.tradeWind.padding;
     setTimeout(function () {
       resetAnimation(new_vals);
       if (callback !== undefined) callback();
-    }, (window.tradeWind.timing * 1000 + window.tradeWind.padding));
+    }, final_padding);
   };
 
   // Public method, runs the animation; for a sample of configuration see the spec
