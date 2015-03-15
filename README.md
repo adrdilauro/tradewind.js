@@ -4,6 +4,8 @@
 
 I am proud to present you <b>tradewind.js</b>, a JavaScript plugin that implements a user-friendly interface for powerful CSS3 animations.
 
+Already a user of <b>tradewind.js</b>? You might be interested in the [complete documentation](https://github.com/adrdilauro/tradewind.js/wiki).
+
 ## Essential features
 
 #### 1 - Easy and human-friendly interface
@@ -76,6 +78,6 @@ tradeWind.run([
 
 This call will smoothly change the background color of `#first-div`, with a delay of 0.2, and move it until a top position of `100px`. Contemporaneously, it will smoothly change the opacity of both `#second-div` and `#third-div`, until a value of 0.8.
 
-Want to know more? For the detailed API, have a look at [the official documentation](https://github.com/adrdilauro/tradewind.js/wiki/Official-documentation).
+Want to know more? For the detailed API, have a look at [the official documentation](https://github.com/adrdilauro/tradewind.js/wiki).
 
 ##### Ready? Now relax and let a smooth trade wind animate your applications for you
