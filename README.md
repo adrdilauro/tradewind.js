@@ -6,25 +6,25 @@ I am proud to present you <b>tradewind.js</b>, a JavaScript plugin that implemen
 
 ## Essential features
 
-#### Easy and human-friendly interface
+#### 1 - Easy and human-friendly interface
 At least as intuitive as jQueryUI
 
-#### All the advantages of CSS3
+#### 2 - All the advantages of CSS3
 Forget jQueryUI's heavy and buggy handling of jQuery objects! With jQueryUI your JavaScript does a lot of hidden work to show small animations, <b>tradewind.js</b> instead does the minimum and gets a result that users feel like magic.
 
-#### A clean, clear, cross-browser callback after animation's end
+#### 3 - A clean, clear, cross-browser callback after animation's end
 Firefox and Chrome didn't even agree how many end events should be fired in the end of a CSS3 animation? Did you get stuck in questions like [this](http://stackoverflow.com/questions/9255279/callback-when-css3-transition-finishes)? Forget about it, <b>tradewind.js</b> simply calculates the transition times and provides you a callback using vanilla JavaScript!
 
-#### No dependencies at all
+#### 4 - No dependencies at all
 <b>tradewind.js</b> is written in vanilla JavaScript!
 
-#### Compatibility with IE8 and IE9
+#### 5 - Compatibility with IE8 and IE9
 Animations won't work because they are not supported, but the overall effect is still perfectly acceptable, being analogous to a simple change of style. You don't have to give up on animations because some of your users still have old browsers!
 
-#### Compatibility with existing default transitions
+#### 6 - Compatibility with existing default transitions
 Default transitions are overwritten during the animation, and restored at its end.
 
-#### Why tradewind.js?
+#### 7 - Why tradewind.js?
 CSS3 animations are smooth, light, and included in HTML5 specifications, but they are really uncomfortable to use, because:
 
 1. they must be attached on an element <b>previously</b>, and on a whitelist of selected properties: the actual animation will take place later, when you change style of one of the those properties;
