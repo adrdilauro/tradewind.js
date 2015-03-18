@@ -470,55 +470,6 @@
         });
       });
 
-    });
-
-    describe("callbacks in IE", function () {
-
-      beforeEach(function () {
-        resetSample();
-        window.Modernizr = {};
-      });
-
-      it("should behave normally if Modernizr.csstransitions is true", function () {
-        window.Modernizr.csstransitions = true;
-        withManipulatedTime(function (timeFlow) {
-          var callback_detector = {
-            called: false
-          };
-          tradeWind.run(sample, function () {
-            callback_detector.called = true;
-          });
-          // For explanation of time flows, this refers to the above example with prestyling
-          expect(callback_detector.called).toEqual(false);
-          timeFlow(110);
-          expect(callback_detector.called).toEqual(false);
-          timeFlow(680);
-          expect(callback_detector.called).toEqual(false);
-          timeFlow(20);
-          expect(callback_detector.called).toEqual(true);
-        });
-      });
-
-      it("should fire the callback immediately if Modernizr.csstransitions is false", function () {
-        window.Modernizr.csstransitions = false;
-        withManipulatedTime(function (timeFlow) {
-          var callback_detector = {
-            called: false
-          };
-          tradeWind.run(sample, function () {
-            callback_detector.called = true;
-          });
-          // See previous example, this time I just remove the timing of 600
-          expect(callback_detector.called).toEqual(false);
-          timeFlow(110);
-          expect(callback_detector.called).toEqual(false);
-          timeFlow(80);
-          expect(callback_detector.called).toEqual(false);
-          timeFlow(20);
-          expect(callback_detector.called).toEqual(true);
-        });
-      });
-
       it("should run concurrently two animations with different timing and preStyling without making mistakes", function () {
         withManipulatedTime(function (timeFlow) {
           var callback_detector = {
@@ -598,6 +549,55 @@
           expect(cube.attr("style")).toEqual("height: 340px;");
 
           */
+        });
+      });
+
+    });
+
+    describe("callbacks in IE", function () {
+
+      beforeEach(function () {
+        resetSample();
+        window.Modernizr = {};
+      });
+
+      it("should behave normally if Modernizr.csstransitions is true", function () {
+        window.Modernizr.csstransitions = true;
+        withManipulatedTime(function (timeFlow) {
+          var callback_detector = {
+            called: false
+          };
+          tradeWind.run(sample, function () {
+            callback_detector.called = true;
+          });
+          // For explanation of time flows, this refers to the above example with prestyling
+          expect(callback_detector.called).toEqual(false);
+          timeFlow(110);
+          expect(callback_detector.called).toEqual(false);
+          timeFlow(680);
+          expect(callback_detector.called).toEqual(false);
+          timeFlow(20);
+          expect(callback_detector.called).toEqual(true);
+        });
+      });
+
+      it("should fire the callback immediately if Modernizr.csstransitions is false", function () {
+        window.Modernizr.csstransitions = false;
+        withManipulatedTime(function (timeFlow) {
+          var callback_detector = {
+            called: false
+          };
+          tradeWind.run(sample, function () {
+            callback_detector.called = true;
+          });
+          // See previous example, this time I just remove the timing of 600
+          expect(callback_detector.called).toEqual(false);
+          timeFlow(110);
+          expect(callback_detector.called).toEqual(false);
+          timeFlow(80);
+          expect(callback_detector.called).toEqual(false);
+          timeFlow(20);
+          expect(callback_detector.called).toEqual(true);
         });
       });
 
