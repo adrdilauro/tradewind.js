@@ -523,20 +523,20 @@
           expect(sphere.attr("style")).toEqual("transition: all 0s ease 0s; opacity: 0.5;");
           // Animation properties have been normalized for #cube
           expect(cube.attr("style")).toEqual("transition: width 2s ease 0s; width: 150px;");
-
-
-/*
-
-          // Now we pass to the next step of the animation process
           // pad +10
           timeFlow(110);
-          // Callback has not been called yet
-          expect(callback_detector.called).toEqual(false);
-          // The final styles have been correctly registered, together with the animation styles
-          expect(sphere.attr("style")).toEqual("transition: width 0.4s ease 0s, height 0.5s ease 0.1s; display: block; height: 34px; width: 1000px;");
-          expect(triangle.attr("style")).toEqual("transition: height 0.5s ease-out 0.1s; height: 340px;");
-          expect(cube.attr("style")).toEqual("transition: height 0.5s ease-out 0.1s; height: 340px;");
-          // 600 + pad - 20, just before the callback
+          // Both callbacks have not been called yet
+          expect(callback_detector.an1).toEqual(false);
+          expect(callback_detector.an2).toEqual(false);
+          // For sphere the final styles have been correctly registered, together with the animation styles
+          expect(sphere.attr("style")).toEqual("transition: height 1s ease 0s; opacity: 0.5; height: 100px;");
+          // For cube nothing changed
+          expect(cube.attr("style")).toEqual("transition: width 2s ease 0s; width: 150px;");
+
+
+
+
+/*          // 600 + pad - 20, just before the callback
           timeFlow(680);
           expect(callback_detector.called).toEqual(false);
           // Now we pass to the final step of the animation process
