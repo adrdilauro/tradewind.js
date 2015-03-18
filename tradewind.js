@@ -146,12 +146,12 @@
     }
   };
 
-  function checkIfPreliminaryStyles (instruction) {
+  function checkIfPreliminaryStyles (instruction, locals) {
     if (instruction.preStyling) {
       // Exception for pre-styling
       handleExceptionForPreStyling(instruction.preStyling);
       /////////
-      window.tradeWind.preStyling = true;
+      locals.preStyling = true;
       var resp = [];
       for (var i = 0; i < instruction.preStyling.length; i++) {
         // Exception for pre-style
@@ -166,9 +166,9 @@
     }
   };
 
-  function compareAndUpdateTiming (duration, delay) {
+  function compareAndUpdateTiming (duration, delay, locals) {
     var new_timing = (parseInt(parseFloat(duration) * 100) + parseInt(parseFloat(delay) * 100)) / 100;
-    if (new_timing > window.tradeWind.timing) window.tradeWind.timing = new_timing;
+    if (new_timing > locals.timing) locals.timing = new_timing;
   };
 
   function extractRule (property, rule) {
@@ -320,10 +320,10 @@
   };
 
   // Public method, applies the CSS; used differently in case of pre-styling
-  window.tradeWind.apply = function (instructions, callback) {
+  window.tradeWind.apply = function (instructions, callback, locals) {
     var final_padding, new_vals = applyAnimationCss(instructions);
     applyFinalCss(new_vals);
-    final_padding = window.tradeWind.timing * 1000 + window.tradeWind.padding;
+    final_padding = locals.timing * 1000 + window.tradeWind.padding;
     if (window.Modernizr && !Modernizr.csstransitions) final_padding = window.tradeWind.padding;
     setTimeout(function () {
       resetAnimation(new_vals);
@@ -332,10 +332,10 @@
   };
 
   // Public method, runs the animation; for a sample of configuration see the spec
-  window.tradeWind.run = function (instructions, callback) {
+  window.tradeWind.run = function (instructions, callback, locals) {
     var locals = window.tradeWind.initialize();
     var instructions = window.tradeWind.parse(instructions);
-    if (window.tradeWind.preStyling) {
+    if (locals.preStyling) {
       applyPreStylingCss(instructions);
       setTimeout(function () {
         window.tradeWind.apply(instructions, callback);
