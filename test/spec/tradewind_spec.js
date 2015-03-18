@@ -83,141 +83,141 @@
 
       it("should accept the sample instructions without throwing exceptions", function () {
         expect(function () {
-          tradeWind.parse(sample);
+          tradeWind.parse(sample, {timing: 0, preStyling: false});
         }).not.toThrow();
       });
 
       it("should raise an exception if an instruction is undefined", function () {
         sample.push(undefined);
         expect(function () {
-          tradeWind.parse(sample);
+          tradeWind.parse(sample, {timing: 0, preStyling: false});
         }).toThrowError(/empty element in the array of instructions/);
       });
 
       it("should raise an exception if elements are undefined", function () {
         sample[0].elements = undefined;
         expect(function () {
-          tradeWind.parse(sample);
+          tradeWind.parse(sample, {timing: 0, preStyling: false});
         }).toThrowError(/cannot parse an undefined selector of animated elements/);
       });
 
       it("should raise an exception if elements are not a selector", function () {
         sample[0].elements = 123;
         expect(function () {
-          tradeWind.parse(sample);
+          tradeWind.parse(sample, {timing: 0, preStyling: false});
         }).toThrowError(/expecting a selector of animated elements, got a different object/);
         sample[0].elements = "#sphere";
         sample[1].elements = "#triangle, #cube";
         expect(function () {
-          tradeWind.parse(sample);
+          tradeWind.parse(sample, {timing: 0, preStyling: false});
         }).not.toThrow();
         sample[0].elements = new String("#sphere");
         sample[1].elements = new String("#triangle, #cube");
         expect(function () {
-          tradeWind.parse(sample);
+          tradeWind.parse(sample, {timing: 0, preStyling: false});
         }).not.toThrow();
       });
 
       it("should raise an exception if the selector of elements is empty", function () {
         sample[0].elements = "#square";
         expect(function () {
-          tradeWind.parse(sample);
+          tradeWind.parse(sample, {timing: 0, preStyling: false});
         }).toThrowError(/the selector of animated elements cannot be empty/);
       });
 
       it("should raise an exception if animations are undefined", function () {
         sample[0].animations = undefined;
         expect(function () {
-          tradeWind.parse(sample);
+          tradeWind.parse(sample, {timing: 0, preStyling: false});
         }).toThrowError(/missing array of animations/);
       });
 
       it("should raise an exception if animations are not an array", function () {
         sample[0].animations = 123;
         expect(function () {
-          tradeWind.parse(sample);
+          tradeWind.parse(sample, {timing: 0, preStyling: false});
         }).toThrowError(/expecting an array of animations, got a different object/);
       });
 
       it("should raise an exception if animations are empty", function () {
         sample[0].animations = [];
         expect(function () {
-          tradeWind.parse(sample);
+          tradeWind.parse(sample, {timing: 0, preStyling: false});
         }).toThrowError(/the array of animations cannot be empty/);
       });
 
       it("should raise an exception if an animation doesn't contain 'property'", function () {
         sample[0].animations[0].property = undefined;
         expect(function () {
-          tradeWind.parse(sample);
+          tradeWind.parse(sample, {timing: 0, preStyling: false});
         }).toThrowError(/animation is missing the required field 'property'/);
       });
 
       it("shouldn't raise an exception if the user decides not to define animationDetails", function () {
         sample[0].animations[0].animationDetails = undefined;
         expect(function () {
-          tradeWind.parse(sample);
+          tradeWind.parse(sample, {timing: 0, preStyling: false});
         }).not.toThrow();
       });
 
       it("should raise an exception if an animation doesn't contain 'final'", function () {
         sample[0].animations[0].final = undefined;
         expect(function () {
-          tradeWind.parse(sample);
+          tradeWind.parse(sample, {timing: 0, preStyling: false});
         }).toThrowError(/animation is missing the required field 'final'/);
       });
 
       it("shouldn't raise an exception if the user decides not to define prestyling", function () {
         sample[0].preStyling = undefined;
         expect(function () {
-          tradeWind.parse(sample);
+          tradeWind.parse(sample, {timing: 0, preStyling: false});
         }).not.toThrow();
       });
 
       it("should raise an exception if pre-styling are not an array", function () {
         sample[0].preStyling = 123;
         expect(function () {
-          tradeWind.parse(sample);
+          tradeWind.parse(sample, {timing: 0, preStyling: false});
         }).toThrowError(/expecting an array of pre-styling, got a different object/);
       });
 
       it("should raise an exception if pre-styling are empty", function () {
         sample[0].preStyling = [];
         expect(function () {
-          tradeWind.parse(sample);
+          tradeWind.parse(sample, {timing: 0, preStyling: false});
         }).toThrowError(/the array of pre-styling cannot be empty/);
       });
 
       it("should raise an exception if a pre-style doesn't contain 'property'", function () {
         sample[0].preStyling[0].property = undefined;
         expect(function () {
-          tradeWind.parse(sample);
+          tradeWind.parse(sample, {timing: 0, preStyling: false});
         }).toThrowError(/pre-style is missing the required field 'property'/);
       });
 
       it("should raise an exception if a pre-style doesn't contain 'value'", function () {
         sample[0].preStyling[0].value = undefined;
         expect(function () {
-          tradeWind.parse(sample);
+          tradeWind.parse(sample, {timing: 0, preStyling: false});
         }).toThrowError(/pre-style is missing the required field 'value'/);
       });
 
       it("should raise an exception if an animation is undefined", function () {
         sample[0].animations.push(undefined);
         expect(function () {
-          tradeWind.parse(sample);
+          tradeWind.parse(sample, {timing: 0, preStyling: false});
         }).toThrowError(/empty element in the array of animations/);
       });
 
       it("should raise an exception if a pre-style is undefined", function () {
         sample[0].preStyling.push(undefined);
         expect(function () {
-          tradeWind.parse(sample);
+          tradeWind.parse(sample, {timing: 0, preStyling: false});
         }).toThrowError(/empty element in the array of pre-styles/);
       });
 
       it("should return a correct parsed sample", function () {
-        var response = tradeWind.parse(sample);
+        var response = tradeWind.parse(sample, {timing: 0, preStyling: false});
         expect(response.length).toEqual(3);
         // First object: "sphere"
         expect(response[0].length).toEqual(4);
@@ -294,13 +294,13 @@
       });
 
       it("should return an empty array if called with an empty array", function () {
-        var response = tradeWind.parse([]);
+        var response = tradeWind.parse([], {timing: 0, preStyling: false});
         expect(response.length).toEqual(0);
       });
 
       it("should use the default values if called with undefined animationDetails", function () {
         sample[1].animations[0].animationDetails = undefined;
-        var response = tradeWind.parse(sample);
+        var response = tradeWind.parse(sample, {timing: 0, preStyling: false});
         // Second object: "triangle"
         expect(response[1][1].length).toEqual(4);
         expect(response[1][1][1].length).toEqual(2);
@@ -328,26 +328,26 @@
       it("should raise an exception if an element is inserted twice", function () {
         sample[0].elements = "#cube";
         expect(function () {
-          tradeWind.parse(sample);
+          tradeWind.parse(sample, {timing: 0, preStyling: false});
         }).toThrowError(/you inserted twice the same object in the instructions: #cube./);
       });
 
       it("should calculate the exact timing during parse", function () {
-        tradeWind.initialize();
-        tradeWind.parse(sample);
+        var locals = tradeWind.initialize();
+        tradeWind.parse(sample, locals);
         expect(tradeWind.timing).toEqual(0.6);
       });
 
       it("should change the timing according to changes on the instructions", function () {
         sample[1].animations[0].animationDetails.duration = "0.2s";
-        tradeWind.initialize();
-        tradeWind.parse(sample);
+        var locals = tradeWind.initialize();
+        tradeWind.parse(sample, locals);
         expect(tradeWind.timing).toEqual(0.6);
         sample[0].animations[1].animationDetails.duration = "0.2s";
-        tradeWind.initialize();
+        locals = tradeWind.initialize();
         sample[0].elements = "#sphere";
         sample[1].elements = "#triangle, #cube";
-        tradeWind.parse(sample);
+        tradeWind.parse(sample, locals);
         expect(tradeWind.timing).toEqual(0.4);
       });
 
@@ -358,21 +358,21 @@
         sample[0].animations[1].animationDetails.delay = "0.1s";
         sample[1].animations[0].animationDetails.duration = "0.2s";
         sample[1].animations[0].animationDetails.delay = "0.1s";
-        tradeWind.initialize();
-        tradeWind.parse(sample);
+        var locals = tradeWind.initialize();
+        tradeWind.parse(sample, locals);
         expect(tradeWind.timing).toEqual(0.3);
       });
 
       it("should correctly set the variable preStyling when there is a preStyling", function () {
-        tradeWind.initialize();
-        tradeWind.parse(sample);
+        var locals = tradeWind.initialize();
+        tradeWind.parse(sample, locals);
         expect(tradeWind.preStyling).toEqual(true);
       });
 
       it("should set preStyling as false if there is no prestyle", function () {
         sample[0].preStyling = undefined;
-        tradeWind.initialize();
-        tradeWind.parse(sample);
+        var locals = tradeWind.initialize();
+        tradeWind.parse(sample, locals);
         expect(tradeWind.preStyling).toEqual(false);
       });
 
