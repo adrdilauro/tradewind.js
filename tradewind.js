@@ -213,7 +213,7 @@
     if (!instruction) throw new UndefinedError(type);
   };
 
-  function parseAnimation (animations) {
+  function parseAnimation (animations, locals) {
     var parsed = [["property", ""], ["duration", ""], ["easing", ""], ["delay", ""]];
     for (var j = 0; j < animations.length; j++) {
       // Exception for animation
@@ -236,7 +236,8 @@
       ) + ", ";
       compareAndUpdateTiming(
         extractRule("duration", animations[j].animationDetails.duration),
-        extractRule("delay", animations[j].animationDetails.delay)
+        extractRule("delay", animations[j].animationDetails.delay),
+        locals
       );
       temporary_final.push([
         animations[j].property,
@@ -250,15 +251,15 @@
     temporary_animation = parsed;
   }
 
-  function parseElement (element, instruction, response, index) {
+  function parseElement (element, instruction, response, index, locals) {
     addNewElementToParsedInstructions(response, index, element);
     if (!temporary_animation) {
       // Exception for animations
       handleExceptionForAnimations(instruction.animations);
       /////////
       temporary_final = [];
-      temporary_prestyles = checkIfPreliminaryStyles(instruction);
-      parseAnimation(instruction.animations);
+      temporary_prestyles = checkIfPreliminaryStyles(instruction, locals);
+      parseAnimation(instruction.animations, locals);
     }
     response[index][1] = temporary_animation;
     response[index][2] = temporary_final;
@@ -295,7 +296,7 @@
   };
 
   // PUblic method, parses the human-friendly instructions and converts them into an appliable array
-  window.tradeWind.parse = function (instructions) {
+  window.tradeWind.parse = function (instructions, locals) {
     var response = [], curr_index = 0;
     for (var i = 0; i < instructions.length; i++) {
       // Exception for instruction
@@ -312,7 +313,7 @@
       handleExceptionForNodeList(instructions[i].elements);
       /////////
       for (var j = 0; j < instructions[i].elements.length; j++) {
-        parseElement(instructions[i].elements[j], instructions[i], response, curr_index);
+        parseElement(instructions[i].elements[j], instructions[i], response, curr_index, locals);
         curr_index += 1;
       }
     }
@@ -332,16 +333,16 @@
   };
 
   // Public method, runs the animation; for a sample of configuration see the spec
-  window.tradeWind.run = function (instructions, callback, locals) {
+  window.tradeWind.run = function (instructions, callback) {
     var locals = window.tradeWind.initialize();
-    var instructions = window.tradeWind.parse(instructions);
+    var instructions = window.tradeWind.parse(instructions, locals);
     if (locals.preStyling) {
       applyPreStylingCss(instructions);
       setTimeout(function () {
-        window.tradeWind.apply(instructions, callback);
+        window.tradeWind.apply(instructions, callback, locals);
       }, window.tradeWind.padding);
     } else {
-      window.tradeWind.apply(instructions, callback);
+      window.tradeWind.apply(instructions, callback, locals);
     }
   };
 
