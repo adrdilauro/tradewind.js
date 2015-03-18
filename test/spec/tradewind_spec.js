@@ -532,23 +532,32 @@
           expect(sphere.attr("style")).toEqual("transition: height 1s ease 0s; opacity: 0.5; height: 100px;");
           // For cube nothing changed
           expect(cube.attr("style")).toEqual("transition: width 2s ease 0s; width: 150px;");
-
-
-
-
-/*          // 600 + pad - 20, just before the callback
-          timeFlow(680);
-          expect(callback_detector.called).toEqual(false);
-          // Now we pass to the final step of the animation process
+          // 1000 + pad - 20, just before the callback of sphere
+          timeFlow(1080);
+          // Both callbacks have not been called yet, and styles didn't change
+          expect(callback_detector.an1).toEqual(false);
+          expect(callback_detector.an2).toEqual(false);
+          expect(sphere.attr("style")).toEqual("transition: height 1s ease 0s; opacity: 0.5; height: 100px;");
+          expect(cube.attr("style")).toEqual("transition: width 2s ease 0s; width: 150px;");
+          // Now sphere callback has been called, and its style has been reset
           timeFlow(20);
-          // Finally, the callback has been called
-          expect(callback_detector.called).toEqual(true);
-          // The animation styles have been correctly reset
-          expect(sphere.attr("style")).toEqual("display: block; height: 34px; width: 1000px;");
-          expect(triangle.attr("style")).toEqual("height: 340px;");
-          expect(cube.attr("style")).toEqual("height: 340px;");
-
-          */
+          expect(callback_detector.an1).toEqual(true);
+          expect(callback_detector.an2).toEqual(false);
+          expect(sphere.attr("style")).toEqual("opacity: 0.5; height: 100px;");
+          expect(cube.attr("style")).toEqual("transition: width 2s ease 0s; width: 150px;");
+          // Now we go just before the callback of cube: 1000 - 20 - 100 (the prestyle of sphere)
+          // Time passed so far: 110 + 1080 + 20 + 880 = 2090
+          timeFlow(880);
+          expect(callback_detector.an1).toEqual(true);
+          expect(callback_detector.an2).toEqual(false);
+          expect(sphere.attr("style")).toEqual("opacity: 0.5; height: 100px;");
+          expect(cube.attr("style")).toEqual("transition: width 2s ease 0s; width: 150px;");
+          // And finally we wait that the callback of cube has been called
+          timeFlow(20);
+          expect(callback_detector.an1).toEqual(true);
+          expect(callback_detector.an2).toEqual(true);
+          expect(sphere.attr("style")).toEqual("opacity: 0.5; height: 100px;");
+          expect(cube.attr("style")).toEqual("width: 150px;");
         });
       });
 
