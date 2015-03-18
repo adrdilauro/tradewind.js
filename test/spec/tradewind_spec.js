@@ -525,6 +525,8 @@
             an1: false,
             an2: false
           };
+          var sphere = $("#sphere");
+          var cube = $("#cube");
           tradeWind.run([
             {
               elements: "#sphere",
@@ -563,6 +565,39 @@
           ], function () {
             callback_detector.an2 = true;
           });
+          // Both callbacks have not been called yet
+          expect(callback_detector.an1).toEqual(false);
+          expect(callback_detector.an2).toEqual(false);
+          // Prestyles have been correctly registered for #sphere, and animation have been normalized
+          expect(sphere.attr("style")).toEqual("transition: all 0s ease 0s; opacity: 0.5;");
+          // Animation properties have been normalized for #cube
+          expect(cube.attr("style")).toEqual("transition: all 0s ease 0s;");
+
+
+/*
+
+          // Now we pass to the next step of the animation process
+          // pad +10
+          timeFlow(110);
+          // Callback has not been called yet
+          expect(callback_detector.called).toEqual(false);
+          // The final styles have been correctly registered, together with the animation styles
+          expect(sphere.attr("style")).toEqual("transition: width 0.4s ease 0s, height 0.5s ease 0.1s; display: block; height: 34px; width: 1000px;");
+          expect(triangle.attr("style")).toEqual("transition: height 0.5s ease-out 0.1s; height: 340px;");
+          expect(cube.attr("style")).toEqual("transition: height 0.5s ease-out 0.1s; height: 340px;");
+          // 600 + pad - 20, just before the callback
+          timeFlow(680);
+          expect(callback_detector.called).toEqual(false);
+          // Now we pass to the final step of the animation process
+          timeFlow(20);
+          // Finally, the callback has been called
+          expect(callback_detector.called).toEqual(true);
+          // The animation styles have been correctly reset
+          expect(sphere.attr("style")).toEqual("display: block; height: 34px; width: 1000px;");
+          expect(triangle.attr("style")).toEqual("height: 340px;");
+          expect(cube.attr("style")).toEqual("height: 340px;");
+
+          */
         });
       });
 
