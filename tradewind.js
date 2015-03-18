@@ -2,9 +2,7 @@
   "use strict";
 
   window.tradeWind = {
-    timing: 0,
     padding: 100,
-    preStyling: false,
     property: {
       unspecified: "all",
       prefixes: [
@@ -290,8 +288,10 @@
 
   // Public function, initializes the variables
   window.tradeWind.initialize = function () {
-    window.tradeWind.timing = 0;
-    window.tradeWind.preStyling = false;
+    return {
+      timing: 0,
+      preStyling: false
+    };
   };
 
   // PUblic method, parses the human-friendly instructions and converts them into an appliable array
@@ -333,7 +333,7 @@
 
   // Public method, runs the animation; for a sample of configuration see the spec
   window.tradeWind.run = function (instructions, callback) {
-    window.tradeWind.initialize();
+    var locals = window.tradeWind.initialize();
     var instructions = window.tradeWind.parse(instructions);
     if (window.tradeWind.preStyling) {
       applyPreStylingCss(instructions);
