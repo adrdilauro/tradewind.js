@@ -390,7 +390,7 @@
 
       it("should call initialize", function () {
         withManipulatedTime(function (timeFlow) {
-          spyOn(tradeWind, "initialize");
+          spyOn(tradeWind, "initialize").and.returnValue({timing: 0, preStyling: false});
           tradeWind.run(sample);
           // pad + 600 + pad (+ 10 that I use just to have a small additional padding in the test)
           timeFlow(810);
