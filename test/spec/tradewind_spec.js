@@ -522,7 +522,7 @@
           // Prestyles have been correctly registered for #sphere, and animation have been normalized
           expect(sphere.attr("style")).toEqual("transition: all 0s ease 0s; opacity: 0.5;");
           // Animation properties have been normalized for #cube
-          expect(cube.attr("style")).toEqual("transition: all 0s ease 0s;");
+          expect(cube.attr("style")).toEqual("transition: width 2s ease 0s; width: 150px;");
 
 
 /*
