@@ -335,20 +335,20 @@
       it("should calculate the exact timing during parse", function () {
         var locals = tradeWind.initialize();
         tradeWind.parse(sample, locals);
-        expect(tradeWind.timing).toEqual(0.6);
+        expect(locals.timing).toEqual(0.6);
       });
 
       it("should change the timing according to changes on the instructions", function () {
         sample[1].animations[0].animationDetails.duration = "0.2s";
         var locals = tradeWind.initialize();
         tradeWind.parse(sample, locals);
-        expect(tradeWind.timing).toEqual(0.6);
+        expect(locals.timing).toEqual(0.6);
         sample[0].animations[1].animationDetails.duration = "0.2s";
         locals = tradeWind.initialize();
         sample[0].elements = "#sphere";
         sample[1].elements = "#triangle, #cube";
         tradeWind.parse(sample, locals);
-        expect(tradeWind.timing).toEqual(0.4);
+        expect(locals.timing).toEqual(0.4);
       });
 
       it("shouldn't make mistakes with decimal sums", function () {
@@ -360,20 +360,20 @@
         sample[1].animations[0].animationDetails.delay = "0.1s";
         var locals = tradeWind.initialize();
         tradeWind.parse(sample, locals);
-        expect(tradeWind.timing).toEqual(0.3);
+        expect(locals.timing).toEqual(0.3);
       });
 
       it("should correctly set the variable preStyling when there is a preStyling", function () {
         var locals = tradeWind.initialize();
         tradeWind.parse(sample, locals);
-        expect(tradeWind.preStyling).toEqual(true);
+        expect(locals.preStyling).toEqual(true);
       });
 
       it("should set preStyling as false if there is no prestyle", function () {
         sample[0].preStyling = undefined;
         var locals = tradeWind.initialize();
         tradeWind.parse(sample, locals);
-        expect(tradeWind.preStyling).toEqual(false);
+        expect(locals.preStyling).toEqual(false);
       });
 
     });
