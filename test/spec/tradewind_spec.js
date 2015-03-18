@@ -519,6 +519,53 @@
         });
       });
 
+      it("should run concurrently two animations with different timing and preStyling without making mistakes", function () {
+        withManipulatedTime(function (timeFlow) {
+          var callback_detector = {
+            an1: false,
+            an2: false
+          };
+          tradeWind.run([
+            {
+              elements: "#sphere",
+              preStyling: [
+                {
+                  property: "opacity",
+                  value: "0.5"
+                }
+              ],
+              animations: [
+                {
+                  property: "height",
+                  animationDetails: {
+                    duration: "1s"
+                  },
+                  final: "100px"
+                }
+              ]
+            }
+          ], function () {
+            callback_detector.an1 = true;
+          });
+          tradeWind.run([
+            {
+              elements: "#cube",
+              animations: [
+                {
+                  property: "width",
+                  animationDetails: {
+                    duration: "2s"
+                  },
+                  final: "150px"
+                }
+              ]
+            }
+          ], function () {
+            callback_detector.an2 = true;
+          });
+        });
+      });
+
     });
 
   });
