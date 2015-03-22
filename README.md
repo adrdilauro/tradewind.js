@@ -6,6 +6,8 @@ I am proud to present you <b>tradewind.js</b>, a JavaScript plugin that implemen
 
 Already a user of <b>tradewind.js</b>? You might be interested in the [complete documentation](https://github.com/adrdilauro/tradewind.js/wiki).
 
+Do you use Ruby? Have a look at the [ruby gem wrapper for tradewind.js](https://github.com/adrdilauro/tradewind).
+
 ## Essential features
 
 #### 1 - Easy and human-friendly interface
