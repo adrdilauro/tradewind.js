@@ -4,6 +4,8 @@
 
 I am proud to present you <b>tradewind.js</b>, a JavaScript plugin that implements a user-friendly interface for powerful CSS3 animations.
 
+For a nice demonstration of this powerful plugin, please have a look at [adrdilauro.github.io](http://adrdilauro.github.io).
+
 Already a user of <b>tradewind.js</b>? You might be interested in the [complete documentation](https://github.com/adrdilauro/tradewind.js/wiki).
 
 Do you use Ruby? Have a look at the [ruby gem wrapper for tradewind.js](https://github.com/adrdilauro/tradewind).
