@@ -171,6 +171,23 @@
     if (new_timing > locals.timing) locals.timing = new_timing;
   };
 
+  function convertStringAnimationIntoRegularAnimation (animation) {
+    if (typeof(animation) !== "string") return animation;
+    var split = animation.split(" "), hashAnimation = {
+      property: split[0],
+      final:    split[1]
+    };
+    if (split.length <= 2) return hashAnimation;
+    hashAnimation.animationDetails = {
+      duration: split[2]
+    };
+    if (split.length <= 3) return hashAnimation;
+    hashAnimation.animationDetails.delay = split[3];
+    if (split.length <= 4) return hashAnimation;
+    hashAnimation.animationDetails.easing = split[3];
+    return hashAnimation;
+  }
+
   function extractRule (property, rule) {
     if (!rule) {
       return window.tradeWind[property].unspecified;
@@ -216,6 +233,7 @@
   function parseAnimation (animations, locals) {
     var parsed = [["property", ""], ["duration", ""], ["easing", ""], ["delay", ""]];
     for (var j = 0; j < animations.length; j++) {
+      animations[j] = convertStringAnimationIntoRegularAnimation (animations[j]);
       // Exception for animation
       handleExceptionForUndefined(animations[j], "animation");
       handleExceptionForSingleAnimation(animations[j]);
