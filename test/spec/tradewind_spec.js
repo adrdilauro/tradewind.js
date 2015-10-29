@@ -636,6 +636,10 @@
     describe("shortcuts", function () {
       beforeEach(function () {
         resetSampleWithShortSyntax();
+        $("#sphere").removeAttr("style");
+        $("#triangle").removeAttr("style");
+        $("#cube").removeAttr("style");
+        window.Modernizr = undefined;
       });
 
       it("should correctly apply preStyles and animation styles, resets them and calls the callback (even when using shortcuts)", function () {
