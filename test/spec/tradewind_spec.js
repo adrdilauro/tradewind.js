@@ -638,7 +638,7 @@
         resetSampleWithShortSyntax();
       });
 
-      it("should correctly apply preStyles and animation styles, resets them and calls the callback (even when using shortcuts", function () {
+      it("should correctly apply preStyles and animation styles, resets them and calls the callback (even when using shortcuts)", function () {
         withManipulatedTime(function (timeFlow) {
           var callback_detector = {
             called: false

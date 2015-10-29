@@ -184,7 +184,7 @@
     if (split.length <= 3) return hashAnimation;
     hashAnimation.animationDetails.delay = split[3];
     if (split.length <= 4) return hashAnimation;
-    hashAnimation.animationDetails.easing = split[3];
+    hashAnimation.animationDetails.easing = split[4];
     return hashAnimation;
   }
 
