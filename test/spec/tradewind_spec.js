@@ -69,14 +69,8 @@
         {
           elements: "#sphere",
           preStyling: [
-            {
-              property: "display",
-              value: "block"
-            },
-            {
-              property: "height",
-              value: "0px"
-            }
+            "display:block",
+            "height: 0px"
           ],
           animations: [
             "width 1000px 0.4s 0s ease",
