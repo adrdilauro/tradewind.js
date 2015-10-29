@@ -191,6 +191,11 @@
 
   function convertStringPreStylingIntoRegularPreStyling (preStyling) {
     if (typeof(preStyling) !== "string") return preStyling;
+    var split = preStyling.split(" ");
+    return {
+      property: split[0],
+      value: split[1]
+    };
   }
 
   function extractRule (property, rule) {
