@@ -154,6 +154,7 @@
       locals.preStyling = true;
       var resp = [];
       for (var i = 0; i < instruction.preStyling.length; i++) {
+        instruction.preStyling[i] = convertStringPreStylingIntoRegularPreStyling(instruction.preStyling[i]);
         // Exception for pre-style
         handleExceptionForUndefined(instruction.preStyling[i], "pre-style");
         handleExceptionForSinglePreStyle(instruction.preStyling[i]);
@@ -186,6 +187,10 @@
     if (split.length <= 4) return hashAnimation;
     hashAnimation.animationDetails.easing = split[4];
     return hashAnimation;
+  }
+
+  function convertStringPreStylingIntoRegularPreStyling (preStyling) {
+    if (typeof(preStyling) !== "string") return preStyling;
   }
 
   function extractRule (property, rule) {
@@ -233,7 +238,7 @@
   function parseAnimation (animations, locals) {
     var parsed = [["property", ""], ["duration", ""], ["easing", ""], ["delay", ""]];
     for (var j = 0; j < animations.length; j++) {
-      animations[j] = convertStringAnimationIntoRegularAnimation (animations[j]);
+      animations[j] = convertStringAnimationIntoRegularAnimation(animations[j]);
       // Exception for animation
       handleExceptionForUndefined(animations[j], "animation");
       handleExceptionForSingleAnimation(animations[j]);
