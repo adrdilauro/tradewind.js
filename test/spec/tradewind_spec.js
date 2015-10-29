@@ -683,8 +683,8 @@
       });
 
       it("should return a correct parsed sample (even when using shortcuts)", function () {
+        sample[0].animations.push("opacity 0.89 1s");
         var response = tradeWind.parse(sample, {timing: 0, preStyling: false});
-        // TODO sample[1].animations.push("width 390px 1s");
         expect(response.length).toEqual(3);
         // First object: "sphere"
         expect(response[0].length).toEqual(4);
@@ -692,23 +692,26 @@
         expect(response[0][1].length).toEqual(4);
         expect(response[0][1][0].length).toEqual(2);
         expect(response[0][1][0][0]).toEqual("property");
-        expect(response[0][1][0][1]).toEqual("width, height");
+        expect(response[0][1][0][1]).toEqual("width, height, opacity");
         expect(response[0][1][1].length).toEqual(2);
         expect(response[0][1][1][0]).toEqual("duration");
-        expect(response[0][1][1][1]).toEqual("0.4s, 0.5s");
+        expect(response[0][1][1][1]).toEqual("0.4s, 0.5s, 1s");
         expect(response[0][1][2].length).toEqual(2);
         expect(response[0][1][2][0]).toEqual("easing");
-        expect(response[0][1][2][1]).toEqual("ease, ease");
+        expect(response[0][1][2][1]).toEqual("ease, ease, ease");
         expect(response[0][1][3].length).toEqual(2);
         expect(response[0][1][3][0]).toEqual("delay");
-        expect(response[0][1][3][1]).toEqual("0s, 0.1s");
-        expect(response[0][2].length).toEqual(2);
+        expect(response[0][1][3][1]).toEqual("0s, 0.1s, 0s");
+        expect(response[0][2].length).toEqual(3);
         expect(response[0][2][0].length).toEqual(2);
         expect(response[0][2][0][0]).toEqual("width");
         expect(response[0][2][0][1]).toEqual("1000px");
         expect(response[0][2][1].length).toEqual(2);
         expect(response[0][2][1][0]).toEqual("height");
         expect(response[0][2][1][1]).toEqual("34px");
+        expect(response[0][2][2].length).toEqual(2);
+        expect(response[0][2][2][0]).toEqual("opacity");
+        expect(response[0][2][2][1]).toEqual("0.89");
         expect(response[0][3].length).toEqual(2);
         expect(response[0][3][0].length).toEqual(2);
         expect(response[0][3][0][0]).toEqual("display");
