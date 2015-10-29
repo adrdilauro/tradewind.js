@@ -1,6 +1,5 @@
 (function () {
   "use strict";
-
   describe("Tradewind.js", function () {
     var sample;
 
@@ -65,12 +64,39 @@
       ];
     };
 
+    var resetSampleWithShortSyntax = function () {
+      sample = [
+        {
+          elements: "#sphere",
+          preStyling: [
+            {
+              property: "display",
+              value: "block"
+            },
+            {
+              property: "height",
+              value: "0px"
+            }
+          ],
+          animations: [
+            "width 1000px 0.4s 0s ease",
+            "height 34px 0.5s 0.1s"
+          ]
+        },
+        {
+          elements: "#triangle, #cube",
+          animations: [
+            "height 340px 0.5s 0.1s ease-out"
+          ]
+        }
+      ];
+    };
+
     it("should provide a 'run' method", function () {
       expect(tradeWind.run).toBeDefined();
     });
 
     describe("parse", function () {
-
       beforeEach(function () {
         resetSample();
       });
@@ -375,11 +401,9 @@
         tradeWind.parse(sample, locals);
         expect(locals.preStyling).toEqual(false);
       });
-
     });
 
     describe("run", function () {
-
       beforeEach(function () {
         resetSample();
         $("#sphere").removeAttr("style");
@@ -560,11 +584,9 @@
           expect(cube.attr("style")).toEqual("width: 150px;");
         });
       });
-
     });
 
     describe("callbacks in IE", function () {
-
       beforeEach(function () {
         resetSample();
         window.Modernizr = {};
@@ -609,9 +631,157 @@
           expect(callback_detector.called).toEqual(true);
         });
       });
-
     });
 
-  });
+    describe("shortcuts", function () {
+      beforeEach(function () {
+        resetSampleWithShortSyntax();
+      });
 
+      it("should correctly apply preStyles and animation styles, resets them and calls the callback (even when using shortcuts", function () {
+        withManipulatedTime(function (timeFlow) {
+          var callback_detector = {
+            called: false
+          };
+          var sphere = $("#sphere");
+          var triangle = $("#triangle");
+          var cube = $("#cube");
+          tradeWind.run(sample, function () {
+            callback_detector.called = true;
+          });
+          // Callback has not been called yet
+          expect(callback_detector.called).toEqual(false);
+          // Prestyles have been correctly registered, and animation properties have been normalized
+          expect(sphere.attr("style")).toEqual("transition: all 0s ease 0s; display: block; height: 0px;");
+          expect(triangle.attr("style")).toEqual("transition: all 0s ease 0s;");
+          expect(cube.attr("style")).toEqual("transition: all 0s ease 0s;");
+          // Now we pass to the next step of the animation process
+          // pad +10
+          timeFlow(110);
+          // Callback has not been called yet
+          expect(callback_detector.called).toEqual(false);
+          // The final styles have been correctly registered, together with the animation styles
+          expect(sphere.attr("style")).toEqual("transition: width 0.4s ease 0s, height 0.5s ease 0.1s; display: block; height: 34px; width: 1000px;");
+          expect(triangle.attr("style")).toEqual("transition: height 0.5s ease-out 0.1s; height: 340px;");
+          expect(cube.attr("style")).toEqual("transition: height 0.5s ease-out 0.1s; height: 340px;");
+          // 600 + pad - 20, just before the callback
+          timeFlow(680);
+          expect(callback_detector.called).toEqual(false);
+          // Now we pass to the final step of the animation process
+          timeFlow(20);
+          // Finally, the callback has been called
+          expect(callback_detector.called).toEqual(true);
+          // The animation styles have been correctly reset
+          expect(sphere.attr("style")).toEqual("display: block; height: 34px; width: 1000px;");
+          expect(triangle.attr("style")).toEqual("height: 340px;");
+          expect(cube.attr("style")).toEqual("height: 340px;");
+        });
+      });
+
+      it("should return a correct parsed sample (even when using shortcuts)", function () {
+        var response = tradeWind.parse(sample, {timing: 0, preStyling: false});
+        // TODO sample[1].animations.push("width 390px 1s");
+        expect(response.length).toEqual(3);
+        // First object: "sphere"
+        expect(response[0].length).toEqual(4);
+        expect(response[0][0].id).toEqual("sphere");
+        expect(response[0][1].length).toEqual(4);
+        expect(response[0][1][0].length).toEqual(2);
+        expect(response[0][1][0][0]).toEqual("property");
+        expect(response[0][1][0][1]).toEqual("width, height");
+        expect(response[0][1][1].length).toEqual(2);
+        expect(response[0][1][1][0]).toEqual("duration");
+        expect(response[0][1][1][1]).toEqual("0.4s, 0.5s");
+        expect(response[0][1][2].length).toEqual(2);
+        expect(response[0][1][2][0]).toEqual("easing");
+        expect(response[0][1][2][1]).toEqual("ease, ease");
+        expect(response[0][1][3].length).toEqual(2);
+        expect(response[0][1][3][0]).toEqual("delay");
+        expect(response[0][1][3][1]).toEqual("0s, 0.1s");
+        expect(response[0][2].length).toEqual(2);
+        expect(response[0][2][0].length).toEqual(2);
+        expect(response[0][2][0][0]).toEqual("width");
+        expect(response[0][2][0][1]).toEqual("1000px");
+        expect(response[0][2][1].length).toEqual(2);
+        expect(response[0][2][1][0]).toEqual("height");
+        expect(response[0][2][1][1]).toEqual("34px");
+        expect(response[0][3].length).toEqual(2);
+        expect(response[0][3][0].length).toEqual(2);
+        expect(response[0][3][0][0]).toEqual("display");
+        expect(response[0][3][0][1]).toEqual("block");
+        expect(response[0][3][1].length).toEqual(2);
+        expect(response[0][3][1][0]).toEqual("height");
+        expect(response[0][3][1][1]).toEqual("0px");
+        // Second object: "triangle"
+        expect(response[1].length).toEqual(4);
+        expect(response[1][0].id).toEqual("triangle");
+        expect(response[1][1].length).toEqual(4);
+        expect(response[1][1][0].length).toEqual(2);
+        expect(response[1][1][0][0]).toEqual("property");
+        expect(response[1][1][0][1]).toEqual("height");
+        expect(response[1][1][1].length).toEqual(2);
+        expect(response[1][1][1][0]).toEqual("duration");
+        expect(response[1][1][1][1]).toEqual("0.5s");
+        expect(response[1][1][2].length).toEqual(2);
+        expect(response[1][1][2][0]).toEqual("easing");
+        expect(response[1][1][2][1]).toEqual("ease-out");
+        expect(response[1][1][3].length).toEqual(2);
+        expect(response[1][1][3][0]).toEqual("delay");
+        expect(response[1][1][3][1]).toEqual("0.1s");
+        expect(response[1][2].length).toEqual(1);
+        expect(response[1][2][0].length).toEqual(2);
+        expect(response[1][2][0][0]).toEqual("height");
+        expect(response[1][2][0][1]).toEqual("340px");
+        expect(response[1][3]).not.toBeDefined();
+        // Third object: "cube"
+        expect(response[2].length).toEqual(4);
+        expect(response[2][0].id).toEqual("cube");
+        expect(response[2][1].length).toEqual(4);
+        expect(response[2][1][0].length).toEqual(2);
+        expect(response[2][1][0][0]).toEqual("property");
+        expect(response[2][1][0][1]).toEqual("height");
+        expect(response[2][1][1].length).toEqual(2);
+        expect(response[2][1][1][0]).toEqual("duration");
+        expect(response[2][1][1][1]).toEqual("0.5s");
+        expect(response[2][1][2].length).toEqual(2);
+        expect(response[2][1][2][0]).toEqual("easing");
+        expect(response[2][1][2][1]).toEqual("ease-out");
+        expect(response[2][1][3].length).toEqual(2);
+        expect(response[2][1][3][0]).toEqual("delay");
+        expect(response[2][1][3][1]).toEqual("0.1s");
+        expect(response[2][2].length).toEqual(1);
+        expect(response[2][2][0].length).toEqual(2);
+        expect(response[2][2][0][0]).toEqual("height");
+        expect(response[2][2][0][1]).toEqual("340px");
+        expect(response[2][3]).not.toBeDefined();
+      });
+
+      it("should use the default values if called with undefined animationDetails (even when using shortcuts)", function () {
+        sample[1].animations[0] = "height 340px";
+        var response = tradeWind.parse(sample, {timing: 0, preStyling: false});
+        // Second object: "triangle"
+        expect(response[1][1].length).toEqual(4);
+        expect(response[1][1][1].length).toEqual(2);
+        expect(response[1][1][1][0]).toEqual("duration");
+        expect(response[1][1][1][1]).toEqual("0s");
+        expect(response[1][1][2].length).toEqual(2);
+        expect(response[1][1][2][0]).toEqual("easing");
+        expect(response[1][1][2][1]).toEqual("ease");
+        expect(response[1][1][3].length).toEqual(2);
+        expect(response[1][1][3][0]).toEqual("delay");
+        expect(response[1][1][3][1]).toEqual("0s");
+        // Third object: "cube"
+        expect(response[2][1].length).toEqual(4);
+        expect(response[2][1][1].length).toEqual(2);
+        expect(response[2][1][1][0]).toEqual("duration");
+        expect(response[2][1][1][1]).toEqual("0s");
+        expect(response[2][1][2].length).toEqual(2);
+        expect(response[2][1][2][0]).toEqual("easing");
+        expect(response[2][1][2][1]).toEqual("ease");
+        expect(response[2][1][3].length).toEqual(2);
+        expect(response[2][1][3][0]).toEqual("delay");
+        expect(response[2][1][3][1]).toEqual("0s");
+      });
+    });
+  });
 }());
