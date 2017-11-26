@@ -399,7 +399,7 @@
         var newVals = applyAnimationCss(instructions);
         applyFinalCss(newVals);
         finalPadding = locals.timing * 1000 + tradeWind.padding;
-        if (!Modernizr.csstransitions) {
+        if (w.Modernizr && !Modernizr.csstransitions) {
             finalPadding = tradeWind.padding;
         }
         setTimeout(function() {
