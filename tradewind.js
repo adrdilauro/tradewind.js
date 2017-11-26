@@ -376,7 +376,7 @@
             var newVals = applyAnimationCss(instructions);
             applyFinalCss(newVals);
             finalPadding = locals.timing * 1000 + padding;
-            if (!Modernizr.csstransitions) {
+            if (window.Modernizr && !Modernizr.csstransitions) {
                 finalPadding = padding;
             }
             setTimeout(function() {
