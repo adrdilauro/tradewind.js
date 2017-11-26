@@ -48,33 +48,14 @@ tradeWind.run([
   {
     elements: "#first-div",
     animations: [
-      {
-        property: "background-color",
-        animationDetails: {
-          duration: "0.5s",
-          delay: "0.2s"
-        },
-        final: "#123456"
-      },
-      {
-        property: "top",
-        animationDetails: {
-          duration: "1s"
-        },
-        final: "100px"
-      }
+      "background-color #123456 0.5s 0.2s",
+      "top 100px 1s",
     ]
   },
   {
     elements: "#second-div, #third-div",
     animations: [
-      {
-        property: "opacity",
-        animationDetails: {
-          duration: "0.7s"
-        },
-        final: "0.8"
-      }
+      "opacity 0.8 0.7s",
     ]
   }
 ]);
